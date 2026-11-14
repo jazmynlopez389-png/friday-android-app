@@ -6,7 +6,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Unzip Project
-        run: unzip -q FRIDAY-AI-Android-Starter.zip -d project
+        run: |
+          ZIP_FILE=$(find . -maxdepth 1 -name "FRIDAY-AI-Android-Starter*.zip" | head -n 1)
+          echo "Unzipping: $ZIP_FILE"
+          unzip -q "$ZIP_FILE" -d project
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
