@@ -13,10 +13,13 @@ jobs:
           java-version: '17'
       - uses: gradle/actions/setup-gradle@v4
       - name: Build Debug APK
-        working-directory: project/FRIDAY-AI-Android-Starter
-        run: gradle assembleDebug
+        run: |
+          PROJECT_DIR=$(dirname $(find project -name "settings.gradle*" | head -n 1))
+          echo "Building in $PROJECT_DIR"
+          cd "$PROJECT_DIR"
+          gradle assembleDebug
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: FRIDAY-App-APK
-          path: project/FRIDAY-AI-Android-Starter/app/build/outputs/apk/debug/app-debug.apk
+          path: "**/app-debug.apk"
